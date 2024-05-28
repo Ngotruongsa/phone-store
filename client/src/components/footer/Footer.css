@@ -38,10 +38,10 @@
     color: #333;
     padding: 1rem 0;
     text-transform: uppercase;
-    width: 150px;
+    /* width: 150px; */
 }
 .footer-top-about h2, .footer-top-sp h2, .footer-top-delivery h2{
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 
     padding: 1rem 0;
     color: #333;
@@ -58,9 +58,19 @@
     color: #d70018;
     font-weight: 500;
 }
+.footer-top-sp ul {
+    display: flex;
+}
+.footer-top-sp ul li {
+    margin-right: 5px;
+    border: 1px solid #dee2e6;
+    padding: 0;
+}
 .footer-bot{
     padding: 1rem 0;
+    background: #f2f2f2;
     color: #333;
+    width: auto !important;
 }
 .footer-bot p{
     margin: 0;
