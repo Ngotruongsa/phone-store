@@ -27,6 +27,10 @@
     color: #fff;
     margin-right: 1rem;
 }
+
+.logo span img {
+    width: 120px;
+}
 .menu-list {
     display: flex;
     margin: 0;

@@ -5,6 +5,8 @@ import { SignoutUser } from "../../actions/UserAction";
 import { useHistory } from "react-router";
 import { searchProduct } from "../../actions/ProductAction";
 import { Link } from "react-router-dom";
+import Logo from "../../assets/images/logo.png";
+
 
 import {
   DownOutlined,
@@ -45,7 +47,9 @@ function Header(props) {
       <section id="menu">
         <div className="logo">
           <span>
-            <Link to="/"> CELLPHONES </Link>
+            <Link to="/"> 
+            <img src={Logo} alt='Logo' /> 
+            </Link>
           </span>
         </div>
         <div className="search">
