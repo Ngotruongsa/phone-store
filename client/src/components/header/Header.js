@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Header.css";
 import { SignoutUser } from "../../actions/UserAction";
+import { useThemeToggle } from "../../ThemeContext";
 import { useHistory } from "react-router";
 import { searchProduct } from "../../actions/ProductAction";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/images/logo.png";
-
+import HomeIcon from "@mui/icons-material/Home";
+import NotesIcon from "@mui/icons-material/Notes";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { Switch, FormControlLabel } from "@mui/material";
 
 import {
   DownOutlined,
@@ -17,8 +21,6 @@ import {
 function Header(props) {
   const dispatch = useDispatch();
   const history = useHistory();
-
-  
 
   const [showAccount, setShowAccount] = useState(false);
   const [showAccount2, setShowAccount2] = useState(false);
@@ -31,15 +33,17 @@ function Header(props) {
 
   const [menu, setMenu] = useState(true);
 
+  const toggleDarkMode = useThemeToggle();
+
   const handleSignout = () => {
     dispatch(SignoutUser());
   };
 
   const SearchProduct = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     await history.push("/search");
     dispatch(searchProduct(search));
-    setSearch('')
+    setSearch("");
   };
 
   return (
@@ -47,8 +51,8 @@ function Header(props) {
       <section id="menu">
         <div className="logo">
           <span>
-            <Link to="/"> 
-            <img src={Logo} alt='Logo' /> 
+            <Link to="/">
+              <img src={Logo} alt="Logo" />
             </Link>
           </span>
         </div>
@@ -67,10 +71,16 @@ function Header(props) {
         </div>
         <ul className="menu-list" id={menu ? "hidden" : ""}>
           <li className="active">
-            <Link to="/"> Trang Chủ </Link>
+            <Link to="/">
+              {" "}
+              <HomeIcon /> Trang Chủ{" "}
+            </Link>
           </li>
           <li>
-            <Link to="/product"> Sản Phẩm </Link>
+            <Link to="/product">
+              {" "}
+              <NotesIcon /> Sản Phẩm{" "}
+            </Link>
           </li>
           {userInfo ? (
             <li onClick={() => setShowAccount2(!showAccount2)}>
@@ -83,6 +93,16 @@ function Header(props) {
                   {userInfo.isAdmin ? <Link to="/admin">Admin</Link> : ""}
                   <Link to="/myOrder">Đơn hàng</Link>
                   <Link onClick={() => handleSignout()}>Đăng xuất</Link>
+                  <ul style={{display: "flex"}}>
+                    <li>
+                    Dark mode
+                    </li>
+                    <li style={{marginLeft: "-5px"}}>
+                  <FormControlLabel
+                    control={<Switch onChange={toggleDarkMode} />}
+                  />
+                    </li>
+                  </ul>
                 </div>
               ) : (
                 ""
@@ -91,6 +111,7 @@ function Header(props) {
           ) : (
             <li onClick={() => setShowAccount(!showAccount)}>
               <Link>
+                <AccountCircleIcon />
                 Tài khoản
                 <DownOutlined style={{ fontSize: "14px" }} />
               </Link>
@@ -99,6 +120,16 @@ function Header(props) {
                 <div className="menu-drop">
                   <Link to="register">Đăng kí</Link>
                   <Link to="login">Đăng nhập</Link>
+                  <ul style={{display: "flex"}}>
+                    <li>
+                    Dark mode
+                    </li>
+                    <li style={{marginLeft: "-5px"}}>
+                  <FormControlLabel
+                    control={<Switch onChange={toggleDarkMode} />}
+                  />
+                    </li>
+                  </ul>
                 </div>
               ) : (
                 ""
