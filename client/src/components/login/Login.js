@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from 'react-redux';
 import {login} from '../../actions/UserAction'
 import { useHistory } from 'react-router';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
 
 function Login(props) {
   const dispatch = useDispatch();
@@ -43,7 +43,7 @@ function Login(props) {
 
         <input type="submit" value="Đăng Nhập"></input>
         {error ? <h2>{error}</h2> : <></>}
-        <Link to="/register">Tạo tài khoản?</Link>
+        <span>Bạn chưa có tài khoản? <Link to="/register">Tạo tài khoản?</Link></span>
       </form>
     </div>
   );

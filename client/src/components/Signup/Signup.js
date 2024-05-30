@@ -3,7 +3,8 @@ import './Signup.css'
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
-import {SignupUser} from '../../actions/UserAction'
+import {SignupUser} from '../../actions/UserAction';
+import {Link} from 'react-router-dom';
 
 function Login(props) {
     const dispatch = useDispatch()
@@ -47,6 +48,7 @@ function Login(props) {
 
           <input type="submit" value="Đăng Kí"></input>
         </form>
+          <span>Bạn đã có tài khoản? <Link to="/login">Đăng nhập ngay</Link></span>
       </div>
     );
 }
