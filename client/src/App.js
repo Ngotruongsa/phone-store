@@ -1,5 +1,6 @@
 import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { CustomThemeProvider } from './ThemeContext';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
@@ -17,6 +18,7 @@ import OrderSuccessPage from './pages/OrderSuccessPage'
 
 function App() {
   return (
+    <CustomThemeProvider>
     <div className="App">
   
       <Router>
@@ -76,6 +78,7 @@ function App() {
 
       </Router>
     </div>
+    </CustomThemeProvider>
   );
 }
 
