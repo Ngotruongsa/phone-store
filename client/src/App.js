@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { CustomThemeProvider } from './ThemeContext';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
@@ -14,7 +14,8 @@ import ResetScroll from './components/ResetScroll/ResetScroll';
 import MyOrderPage from './pages/MyOrderPage';
 import ChatPage from './pages/ChatPage';
 import PaymentPage from './pages/PaymentPage';
-import OrderSuccessPage from './pages/OrderSuccessPage'
+import OrderSuccessPage from './pages/OrderSuccessPage';
+import NotFound from './pages/NotFoundPage';
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
       <Router>
         
         <ResetScroll></ResetScroll>
-
+        <Switch>
         <Route path="/" exact>
           <HomePage></HomePage>
         </Route>
@@ -71,6 +72,11 @@ function App() {
         <Route path='/admin'>
           <AdminPage></AdminPage>
         </Route>
+
+        <Route path='*'>
+          <NotFound></NotFound>
+        </Route>
+        </Switch>
 
         {/* <Route path='*'>
           <HomePage></HomePage>
