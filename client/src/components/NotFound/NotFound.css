@@ -1,0 +1,68 @@
+.not-found-main {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .not-found-title {
+    font-size: 9rem;
+    font-weight: 800;
+    letter-spacing: widest;
+    color: #1a202c; /* Equivalent to text-gray-900 */
+  }
+  
+  .not-found-message {
+    position: absolute;
+    transform: rotate(12deg);
+    background-color: #d70018;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    color: white;
+    border-radius: 0.25rem;
+  }
+  
+  .not-found-button {
+    margin-top: 1.25rem; /* Equivalent to mt-5 */
+  }
+  
+  .not-found-link {
+    position: relative;
+    display: inline-block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: white;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .not-found-link:focus,
+  .not-found-link:active {
+    color: #d70018; /* Equivalent to text-orange-500 */
+  }
+  
+  .not-found-link-bg {
+    position: absolute;
+    inset: 0;
+    transform: translate(0.125rem, 0.125rem); /* Equivalent to translate-x-0.5 and translate-y-0.5 */
+    background-color: #d70018;
+    transition: transform 0.3s;
+  }
+  
+  .not-found-link:hover .not-found-link-bg,
+  .not-found-link:focus .not-found-link-bg {
+    transform: translate(0, 0);
+  }
+  
+  .not-found-link-text {
+    position: relative;
+    display: block;
+    border: 1px solid currentColor;
+    padding: 0.75rem 2rem; /* Equivalent to px-8 and py-3 */
+  }
+  
