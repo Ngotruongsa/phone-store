@@ -4,6 +4,7 @@ import { CustomThemeProvider } from './ThemeContext';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
+import ChangePasswordPage from './pages/ChangePasswordPage';
 import ProductPage from './pages/ProductPage';
 import DetailPage from './pages/DetailPage';
 import CartPage from './pages/CartPage';
@@ -35,6 +36,9 @@ function App() {
         </Route>
         <Route path="/register">
           <SignupPage></SignupPage>
+        </Route>
+        <Route path="/password">
+          <ChangePasswordPage></ChangePasswordPage>
         </Route>
 
         <Route path="/product">
