@@ -73,7 +73,7 @@
     box-shadow: 4px 3px 4px -5px;
 }
 .menu-drop a{
-    padding: .3rem 1rem;
+    padding: .3rem 0.5rem;
     color: #333;
 }
 .menu-drop a:hover{
