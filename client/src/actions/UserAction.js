@@ -50,3 +50,18 @@ export const deleteUser = (userId) => async (dispatch, getState) => {
     dispatch({type: 'DELETE_USER_FAIL', error: error.message})
   }
 }
+
+export const changePassword = (userId, oldPassword, newPassword) => async (dispatch) => {
+  dispatch({ type: 'USER_PASSWORD_CHANGE_REQUEST' });
+  try {
+    const { data } = await axios.patch(`http://localhost:4000/user/password/${userId}`, { oldPassword, newPassword });
+    dispatch({ type: 'USER_PASSWORD_CHANGE_SUCCESS', payload: data });
+  } catch (error) {
+    dispatch({
+      type: 'USER_PASSWORD_CHANGE_FAIL',
+      payload: error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+};

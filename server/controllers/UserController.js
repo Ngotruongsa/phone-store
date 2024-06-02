@@ -58,3 +58,20 @@ export const DeleteUser = expressAsyncHandler(async (req, res) => {
         res.send({message: 'user not exists'})
     }
 })
+
+export const changePassword = expressAsyncHandler(async (req, res) => {
+    const user = await UserModel.findById({_id: req.params.id});
+    const { oldPassword, newPassword } = req.body;
+
+    if(user){
+        if(user.password !== oldPassword) {
+            res.status(400).send({message: 'Old password is incorrect'});
+        } else {
+            user.password = newPassword;
+            await user.save();
+            res.send({message: 'Password changed successfully'});
+        }
+    }else{
+        res.send({message: 'User not exists'});
+    }
+});

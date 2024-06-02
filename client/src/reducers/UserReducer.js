@@ -40,7 +40,20 @@ export const getAllUserReducer = (state = {}, action) => {
 
         default: return state
     }
-}
+};
+
+export const userPasswordChangeReducer = (state = {}, action) => {
+    switch (action.type) {
+      case 'USER_PASSWORD_CHANGE_REQUEST':
+        return { loading: true };
+      case 'USER_PASSWORD_CHANGE_SUCCESS':
+        return { loading: false, success: true };
+      case 'USER_PASSWORD_CHANGE_FAIL':
+        return { loading: false, error: action.payload };
+      default:
+        return state;
+    }
+  };
 
 // export const deleteUserReducer = (state = {}, action) => {
 //     switch (action.type) {
