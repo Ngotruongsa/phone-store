@@ -85,12 +85,15 @@ function Header(props) {
           {userInfo ? (
             <li onClick={() => setShowAccount2(!showAccount2)}>
               <Link>
+                <AccountCircleIcon />
                 {userInfo.name}
                 <DownOutlined style={{ fontSize: "14px" }} />
               </Link>
               {showAccount2 ? (
                 <div className="menu-drop">
                   {userInfo.isAdmin ? <Link to="/admin">Admin</Link> : ""}
+                  <Link>Tài khoản của tôi</Link>
+                  <Link to="/password">Đổi mật khẩu</Link>
                   <Link to="/myOrder">Đơn hàng</Link>
                   <Link onClick={() => handleSignout()}>Đăng xuất</Link>
                   <ul style={{display: "flex"}}>
