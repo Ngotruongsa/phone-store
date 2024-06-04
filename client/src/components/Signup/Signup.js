@@ -5,13 +5,22 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import {SignupUser} from '../../actions/UserAction';
 import {Link} from 'react-router-dom';
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import showPwdImg from '../../assets/svg/show-password.svg';
+import hidePwdImg from '../../assets/svg/hide-password.svg';
 
 function Login(props) {
     const dispatch = useDispatch()
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
+    const [showPassword, setShowPassword] = useState(false);
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm()
+
+    const handleClickShowPassword = () => {
+      setShowPassword(!showPassword);
+    };
+
     const onSubmit = data => {
         if(password === confirmPassword) {
             dispatch(SignupUser(data))            
@@ -34,17 +43,37 @@ function Login(props) {
           <input
             {...register("password")}
             placeholder="Password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             onChange={(e) => setPassword(e.target.value)}
             required
           ></input>
+          <img
+          title={showPassword ? <VisibilityOff /> : <Visibility />}
+          src={showPassword ? hidePwdImg : showPwdImg}
+          onClick={handleClickShowPassword}
+          style={{  cursor: "pointer",
+          position: "absolute",
+          width: "20px",
+          right: "20px",
+          top: "320px",}}
+        />
           <input
             {...register("repeat password")}
-            placeholder=" Repeat password"
-            type="password"
+            placeholder="Repeat password"
+            type={showPassword ? "text" : "password"}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           ></input>
+          <img
+          title={showPassword ? <VisibilityOff /> : <Visibility />}
+          src={showPassword ? hidePwdImg : showPwdImg}
+          onClick={handleClickShowPassword}
+          style={{  cursor: "pointer",
+          position: "absolute",
+          width: "20px",
+          right: "20px",
+          top: "400px",}}
+        />
 
           <input type="submit" value="Đăng Kí"></input>
         </form>

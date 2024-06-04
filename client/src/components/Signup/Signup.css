@@ -13,6 +13,7 @@
     padding-top: 5rem;
 }
 .signup-page input{
+    position: relative;
     width: 100%;
     outline: none;
     border: 1px solid #eee;
