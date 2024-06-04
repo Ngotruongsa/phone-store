@@ -20,7 +20,7 @@ function TypeMessage(props) {
   return (
     <form onSubmit={handleFormSubmit} className="ad-chatuser-typemessage">
       <input
-        placeholder="Type a message"
+        placeholder="Nhập tin nhắn, nhấn Enter để gửi..."
         type="text"
         value={value}
         onChange={handleValueChange}
