@@ -95,7 +95,7 @@ function AppChat(props) {
       {
         openChat ? (<div className="chatuser">
         <div className="chatuser-user">
-          <span className="chatuser-user-name">Cao Kha Hieu</span>
+          <span className="chatuser-user-name">Phone Store</span>
           <span className="chatuser-user-line" onClick={() => setOpenChat(!openChat)}><LineOutlined></LineOutlined></span>
         </div>
 
