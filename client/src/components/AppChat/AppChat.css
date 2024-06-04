@@ -90,6 +90,9 @@
     outline: none;
     border: 1px solid #ddd;
 }
+input::-webkit-input-placeholder {
+    font-size: 12px;
+}
 .chatuser-typemessage button{
     background: #d70018;
     color: white;
