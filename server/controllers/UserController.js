@@ -75,3 +75,27 @@ export const changePassword = expressAsyncHandler(async (req, res) => {
         res.send({message: 'User not exists'});
     }
 });
+
+export const updateUser = expressAsyncHandler(async (req, res) => {
+    const user = await UserModel.findById(req.params.id);
+
+    if (user) {
+        if (req.body.name !== undefined) user.name = req.body.name;
+        if (req.body.email !== undefined) user.email = req.body.email;
+        if (req.body.address !== undefined) user.address = req.body.address;
+        if (req.body.phone !== undefined) user.phone = req.body.phone;
+
+        const updatedUser = await user.save();
+        res.send({
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            address: updatedUser.address,
+            phone: updatedUser.phone,
+            isAdmin: updatedUser.isAdmin,
+            token: generateToken(updatedUser),
+        });
+    } else {
+        res.status(404).send({ message: 'User Not Found' });
+    }
+});

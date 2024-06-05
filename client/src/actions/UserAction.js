@@ -65,3 +65,26 @@ export const changePassword = (userId, oldPassword, newPassword) => async (dispa
     });
   }
 };
+
+export const updateUser = (userId, user) => async (dispatch, getState) => {
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await axios.put(`http://localhost:4000/user/update/${userId}`, user, {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+    dispatch({ type: 'USER_UPDATE_SUCCESS', payload: data });
+    localStorage.setItem('userInfo', JSON.stringify(data));
+  } catch (error) {
+    dispatch({
+      type: 'USER_UPDATE_FAIL',
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

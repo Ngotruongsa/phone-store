@@ -55,6 +55,17 @@ export const userPasswordChangeReducer = (state = {}, action) => {
     }
   };
 
+  export const UserUpdateReducer = (state = {}, action) => {
+    switch (action.type) {
+        case 'USER_UPDATE_SUCCESS':
+            return { ...state, userInfo: action.payload };
+        case 'USER_UPDATE_FAIL':
+            return { ...state, error: action.payload };
+        default:
+            return state;
+    }
+};
+
 // export const deleteUserReducer = (state = {}, action) => {
 //     switch (action.type) {
         
