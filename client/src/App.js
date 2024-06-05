@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import ChangePasswordPage from './pages/ChangePasswordPage';
+import ProfilePage from './pages/ProfilePage';
 import ProductPage from './pages/ProductPage';
 import DetailPage from './pages/DetailPage';
 import CartPage from './pages/CartPage';
@@ -39,6 +40,9 @@ function App() {
         </Route>
         <Route path="/password">
           <ChangePasswordPage></ChangePasswordPage>
+        </Route>
+        <Route path="/profile">
+          <ProfilePage></ProfilePage>
         </Route>
 
         <Route path="/product">
