@@ -10,6 +10,7 @@ import {
   OrderedListOutlined,
   WechatOutlined,
 } from "@ant-design/icons";
+import Logo from "../../../../assets/images/logo-admin.jpg";
 
 function Sidebar(props) {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ function Sidebar(props) {
   return (
     <div className="sidebar">
       <div className="sidebar-top">
-        <img src="https://raw.githubusercontent.com/trananhtuat/tua-react-admin/main/src/assets/images/logo.png"></img>
+        <img src={Logo}></img>
       </div>
       <div className="sidebar-list">
         <Link to="/admin" className={'sidebar-list-item'}>
