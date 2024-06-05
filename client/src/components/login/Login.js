@@ -63,7 +63,7 @@ function Login(props) {
 
         <input type="submit" value="Đăng Nhập"></input>
         {error ? <h2>{error}</h2> : <></>}
-        <span>Bạn chưa có tài khoản? <Link to="/register">Tạo tài khoản?</Link></span>
+        <span>Bạn chưa có tài khoản? <Link to="/register">Tạo tài khoản</Link></span>
       </form>
     </div>
   );
