@@ -92,7 +92,7 @@ function Header(props) {
               {showAccount2 ? (
                 <div className="menu-drop">
                   {userInfo.isAdmin ? <Link to="/admin">Admin</Link> : ""}
-                  <Link>Tài khoản của tôi</Link>
+                  <Link to="/profile">Tài khoản của tôi</Link>
                   <Link to="/password">Đổi mật khẩu</Link>
                   <Link to="/myOrder">Đơn hàng</Link>
                   <Link onClick={() => handleSignout()}>Đăng xuất</Link>
