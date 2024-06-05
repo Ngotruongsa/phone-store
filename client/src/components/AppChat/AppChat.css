@@ -90,7 +90,7 @@
     outline: none;
     border: 1px solid #ddd;
 }
-input::-webkit-input-placeholder {
+chatuser-typemessage input::-webkit-input-placeholder {
     font-size: 12px;
 }
 .chatuser-typemessage button{
