@@ -25,8 +25,8 @@ export default function DashBoard() {
           </div>
           <div className="dashboard-top-content">
             <li className="dashboard-top-content-avatar">
-              <img src="https://res.cloudinary.com/caokhahieu/image/upload/v1626334932/gediogbkwlg85kbbsamq.jpg"></img>
-              <span>Cao Kha Hieu</span>
+              <img src="https://static.vecteezy.com/system/resources/thumbnails/008/302/513/small/eps10-blue-user-icon-or-logo-in-simple-flat-trendy-modern-style-isolated-on-white-background-free-vector.jpg"></img>
+              <span>Xin chào, <b>Admin</b></span>
             </li>
             <li className="dashboard-top-content-bell">
               <BellOutlined></BellOutlined>
