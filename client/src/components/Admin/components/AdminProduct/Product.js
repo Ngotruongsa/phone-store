@@ -28,12 +28,6 @@ function Product(props) {
       <td>{product.name}</td>
       <td>{formatPrice(product.salePrice)}</td>
       <td>{product.type}</td>
-      <td
-        className="delete-product"
-        onClick={(e) => handleDeleteProduct(product)}
-      >
-        <DeleteOutlined />
-      </td>
       <td className="update-product">
         <Link to={`/admin/product/update/${product._id}`}>
           <EditOutlined></EditOutlined>
@@ -43,6 +37,12 @@ function Product(props) {
         <Link to={`/admin/product/reviewProduct/${product._id}`} >
           <FormOutlined></FormOutlined>
         </Link>
+      </td>
+      <td
+        className="delete-product"
+        onClick={(e) => handleDeleteProduct(product)}
+      >
+        <DeleteOutlined />
       </td>
     </tr>
   );

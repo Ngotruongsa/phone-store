@@ -10,6 +10,10 @@
 }
 .admin-product-link{
     display: flex;
+    justify-content: space-between;
+}
+.admin-product-link .add-update-product {
+    display: flex;
 }
 .admin-product span{
     display: flex;

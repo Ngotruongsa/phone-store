@@ -20,12 +20,15 @@ function AdminProduct(props) {
   return (
     <div className="admin-product">
       <div className="admin-product-link">
-        <Link to="/admin/product/create" className="add-product">
+      <span>Products</span>
+      <div className='add-update-product'>
+      <Link to="/admin/product/create" className="add-product">
           <AppstoreAddOutlined />
         </Link>
         <Link to="/admin/product/update/info" className="add-product">
           <ToolOutlined></ToolOutlined>
         </Link>
+      </div>
       </div>
 
       {products ? (
