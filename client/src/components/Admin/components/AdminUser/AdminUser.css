@@ -5,6 +5,10 @@
     font-weight: 600;
     color: #6b6b6b;
 }
+.admin-user .add-user {
+    display: flex;
+    justify-content: space-between;
+}
 .admin-user-list{
     background: white;
     margin: 0 .5rem 0 1rem;

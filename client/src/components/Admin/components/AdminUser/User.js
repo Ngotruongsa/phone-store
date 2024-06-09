@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteUser, getAllUser } from '../../../../actions/UserAction';
-import { DeleteOutlined} from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined} from '@ant-design/icons';
 
 function User(props) {
     const {user, number} = props
@@ -18,6 +18,7 @@ function User(props) {
             <td>{user.email}</td>
             <td>{user.address}</td>
             <td>{user.phone}</td>
+            <td className="delete-user"onClick={() => handleDeleteUser(user)}><EditOutlined></EditOutlined></td>
             <td className="delete-user"onClick={() => handleDeleteUser(user)}><DeleteOutlined /></td>
         </tr>
     );
