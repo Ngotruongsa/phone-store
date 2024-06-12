@@ -30,25 +30,33 @@ function Cart(props) {
       <section id="shopping-cart">
         <div className="shopping-cart">
           <div className="shopping-cart-header">
-            <Link to="/" className="back">
-              {/* <BsChevronDoubleLeft></BsChevronDoubleLeft> */}
-              Tiếp tục mua hàng
-            </Link>
             <h2 className="shopping-cart-title">Giỏ hàng</h2>
           </div>
 
           {cartItems ? <ListProduct products={cartItems}></ListProduct> : ""}
 
-          <div className="total-price">
+          {/* <div className="total-price">
+            <span className="left">Tổng tiền</span>
+            <span className="right">{formatPrice(totalPrice)}</span>
+          </div> */}
+          {totalPrice <= 0 ? (
+            <div className="empty-cart">
+            <img src="https://shopee-clone-reactjs.vercel.app/assets/no-product.b0846037.png" alt="no purchase" />
+            <span>Giỏ hàng của bạn còn trống</span>
+            <Link to="/" className="back">
+              Tiếp tục mua hàng
+            </Link>
+          </div>
+          ) : (
+            <>
+            <div className="total-price">
             <span className="left">Tổng tiền</span>
             <span className="right">{formatPrice(totalPrice)}</span>
           </div>
-          {totalPrice <= 0 ? (
-            ""
-          ) : (
             <div className="order">
               <Link onClick={() => Order()}> Đặt Hàng </Link>
             </div>
+            </>
           )}
         </div>
       </section>
