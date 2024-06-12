@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { updateUser } from "../../actions/UserAction";
+import { message} from 'antd';
 
 function Profile(prop) {
   const [name, setName] = useState("");
@@ -23,6 +24,20 @@ function Profile(prop) {
   const user = useSelector((state) => state.userSignin);
   const { userInfo, error } = user;
 
+  const success = () => {
+    message.success({
+        content: 'Cập nhật thông tin thành công',
+        duration: 1,
+        className: 'custom-class',
+        style: {
+            position: 'absolute',
+            right: '2rem',
+            top: '2rem',
+            margin: '1rem 0'
+        },
+      });
+  };
+
   const onSubmit = (data) => {
     const updatedData = {};
     if (data.name) updatedData.name = data.name;
@@ -31,6 +46,8 @@ function Profile(prop) {
     if (data.phone) updatedData.phone = data.phone;
 
     dispatch(updateUser(userInfo._id, updatedData));
+
+    success()
   };
 
   useEffect(() => {
