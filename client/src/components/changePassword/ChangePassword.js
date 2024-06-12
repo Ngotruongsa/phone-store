@@ -8,6 +8,7 @@ import { InputAdornment, TextField, IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import showPwdImg from '../../assets/svg/show-password.svg';
 import hidePwdImg from '../../assets/svg/hide-password.svg';
+import { message} from 'antd';
 
 function ChangePassword(prop) {
   const [oldPassword, setOldPassword] = useState("");
@@ -26,11 +27,26 @@ function ChangePassword(prop) {
   const user = useSelector((state) => state.userSignin);
   const { userInfo, error } = user;
 
+  const success = () => {
+    message.success({
+        content: 'Thay đổi mật khẩu thành công',
+        duration: 1,
+        className: 'custom-class',
+        style: {
+            position: 'absolute',
+            right: '2rem',
+            top: '2rem',
+            margin: '1rem 0'
+        },
+      });
+  };
+
   const onSubmit = (data) => {
     dispatch(changePassword(userInfo._id, data.oldPassword, data.newPassword));
     setOldPassword("");
     setNewPassword("");
     reset();
+    success()
   };
 
   const handleClickShowOldPassword = () => {
