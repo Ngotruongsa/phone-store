@@ -12,7 +12,15 @@ function Search(props) {
         <section id="hotsale iphone">
             <div className="hotsale">
                 {
-                    products && products.length > 0 ? (<ListProduct HotSaleProducts={handlePercentDiscount(products)}></ListProduct>) : (<h2>ko tim thay sp</h2>)
+                    products && products.length > 0 ? (<ListProduct HotSaleProducts={handlePercentDiscount(products)}></ListProduct>) : (
+                    <>
+                    <div className="search-empty-result-section">
+                    <img src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/search/a60759ad1dabe909c46a.png" alt="" />
+                    <h3>Không tìm thấy sản phẩm nào</h3>
+                    <h3>Hãy thử sử dụng các từ khóa chung chung hơn</h3>
+                    </div>
+                    </>
+                )
                 }
             </div>
         </section>

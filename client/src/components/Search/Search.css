@@ -24,10 +24,9 @@ p{
     margin: auto;
     padding: 1rem 0;
 }
-.hotsale h2{
+.hotsale span{
     color: #d70018;
     display: flex;
-    text-transform: uppercase;
 }
 
 
@@ -180,3 +179,16 @@ p{
         height: 100px;
     }
 } */ 
+
+.search-empty-result-section{
+    width: 80%;
+    margin: auto;
+    margin-top: 100px;
+    padding: 1rem 0;
+}
+.search-empty-result-section img {
+    width: 134px;
+}
+.search-empty-result-section h3{
+    color: #d70018;
+}
