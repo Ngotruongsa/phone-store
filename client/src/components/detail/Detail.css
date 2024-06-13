@@ -11,6 +11,9 @@
     text-align: left;
     padding: .5rem 0;
 }
+.detail-title h2 {
+    font-weight: 700;
+}
 .detail-info{
     display: flex;
 }
@@ -88,6 +91,15 @@
     background: #fff;
     color: #e11b1e;
     text-decoration: none;
+}
+
+.add-to-cart a {
+    background: #fff;
+    color: #e11b1e;
+}
+.add-to-cart a:hover {
+    background: #e11b1e !important;
+    color: #fff !important;
 }
 
 .detail-info-right-buy-installment {
