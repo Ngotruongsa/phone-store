@@ -14,11 +14,16 @@ function Login(props) {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false);
+    const [showRepeatPassword, setShowRepeatPassword] = useState(false);
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm()
 
     const handleClickShowPassword = () => {
       setShowPassword(!showPassword);
+    };
+
+    const handleClickShowRepeatPassword = () => {
+      setShowRepeatPassword(!showRepeatPassword);
     };
 
     const onSubmit = data => {
@@ -60,14 +65,14 @@ function Login(props) {
           <input
             {...register("repeat password")}
             placeholder="Repeat password"
-            type={showPassword ? "text" : "password"}
+            type={showRepeatPassword ? "text" : "password"}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           ></input>
           <img
-          title={showPassword ? <VisibilityOff /> : <Visibility />}
-          src={showPassword ? hidePwdImg : showPwdImg}
-          onClick={handleClickShowPassword}
+          title={showRepeatPassword ? <VisibilityOff /> : <Visibility />}
+          src={showRepeatPassword ? hidePwdImg : showPwdImg}
+          onClick={handleClickShowRepeatPassword}
           style={{  cursor: "pointer",
           position: "absolute",
           width: "20px",
