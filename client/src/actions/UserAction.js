@@ -21,6 +21,22 @@ export const SignupUser = (user) => async (dispatch) => {
     }
 };
 
+export const createUser = (user) => async (dispatch) => {
+  dispatch({ type: 'USER_CREATE_REQUEST' });
+  try {
+    const { data } = await axios.post('http://localhost:4000/user/register', user);
+    dispatch({ type: 'USER_CREATE_SUCCESS', payload: data });
+    document.location.href = '/admin/customer';
+  } catch (error) {
+    dispatch({
+      type: 'USER_CREATE_FAIL',
+      payload: error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+};
+
 export const SignoutUser = (user) => async (dispatch) => {
   localStorage.removeItem('userInfo')
   dispatch({type: 'USER_SIGNOUT_SUCCESS', payload: {} })
