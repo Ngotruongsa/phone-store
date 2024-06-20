@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteUser, getAllUser } from '../../../../actions/UserAction';
+import { Link } from "react-router-dom";
 import { DeleteOutlined, EditOutlined} from '@ant-design/icons';
 
 function User(props) {
@@ -18,7 +19,11 @@ function User(props) {
             <td>{user.email}</td>
             <td>{user.address}</td>
             <td>{user.phone}</td>
-            <td className="delete-user"onClick={() => handleDeleteUser(user)}><EditOutlined></EditOutlined></td>
+            <td className="delete-user">
+            <Link to={`/admin/customer/update/${user._id}`}>
+          <EditOutlined></EditOutlined>
+</Link>
+            </td>
             <td className="delete-user"onClick={() => handleDeleteUser(user)}><DeleteOutlined /></td>
         </tr>
     );

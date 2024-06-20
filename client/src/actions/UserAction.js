@@ -104,3 +104,35 @@ export const updateUser = (userId, user) => async (dispatch, getState) => {
     });
   }
 };
+
+// export const getUserDetails = (userId) => async (dispatch, getState) => {
+//   dispatch({ type: 'USER_DETAILS_REQUEST' });
+//   try {
+//     const { data } = await axios.get(`http://localhost:4000/user/${userId}`);
+//     dispatch({ type: 'USER_DETAILS_SUCCESS', payload: data });
+//   } catch (error) {
+//     dispatch({
+//       type: 'USER_DETAILS_FAIL',
+//       payload: error.response && error.response.data.message
+//         ? error.response.data.message
+//         : error.message,
+//     });
+//   }
+// };
+
+export const updateCustomer = (userId, user) => async (dispatch, getState) => {
+  dispatch({ type: 'USER_CREATE_REQUEST' });
+  try {
+    const { data } = await axios.put(`http://localhost:4000/user/update/${userId}`, user);
+    dispatch({ type: 'USER_UPDATE_SUCCESS', payload: data });
+    document.location.href = '/admin/customer';
+  } catch (error) {
+    dispatch({
+      type: 'USER_UPDATE_FAIL',
+      payload: error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+};
+

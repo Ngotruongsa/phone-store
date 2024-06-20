@@ -99,3 +99,12 @@ export const updateUser = expressAsyncHandler(async (req, res) => {
         res.status(404).send({ message: 'User Not Found' });
     }
 });
+
+export const getUserDetails = expressAsyncHandler(async (req, res) => {
+    const user = await UserModel.findById(req.params.id);
+    if (user) {
+      res.send(user);
+    } else {
+      res.status(404).send({ message: 'User Not Found' });
+    }
+  });
