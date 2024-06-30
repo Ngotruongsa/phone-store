@@ -54,7 +54,7 @@ function Cart(props) {
             <span className="right">{formatPrice(totalPrice)}</span>
           </div>
             <div className="order">
-              <Link onClick={() => Order()}> Đặt Hàng </Link>
+              <Link onClick={() => Order()}> Mua Hàng </Link>
             </div>
             </>
           )}
