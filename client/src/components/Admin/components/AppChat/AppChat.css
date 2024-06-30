@@ -62,6 +62,7 @@
 }
 .contact-list-item-content{
     margin-left: 1rem;
+    text-align: left;
 }
 .contact-list-item-name{
     font-size: 18px;
