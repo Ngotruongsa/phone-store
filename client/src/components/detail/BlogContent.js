@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 function BlogContent(props) {
   const detailProduct = useSelector((state) => state.getProductById.product);
@@ -24,7 +25,7 @@ function BlogContent(props) {
                   setShowMoreBlog(!showMoreBlog);
                 }}
               >
-                Xem Thêm đánh giá
+                Xem thêm <ArrowDropDownIcon/>
               </div>
             ) : (
               ""
