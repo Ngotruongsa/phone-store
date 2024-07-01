@@ -22,6 +22,11 @@
     width: 100%;
     height: 100%;
 }
+.form-login .error{
+    color: #D70018;
+    font-size: 15px;
+    margin-right: auto;
+}
 .login-page input{
     position: relative;
     width: 100%;

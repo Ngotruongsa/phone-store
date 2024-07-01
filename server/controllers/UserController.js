@@ -44,7 +44,7 @@ export const login = expressAsyncHandler(async (req, res) => {
             token: generateToken(user),
         });
     }else{
-        res.status(401).send({message: "invalid email or password"})
+        res.status(401).send({message: "Email hoặc password không đúng !"})
     }
 })
 

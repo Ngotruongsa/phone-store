@@ -43,7 +43,7 @@ function Login(props) {
     <div class="login-page">
       <h2> ĐĂNG NHẬP </h2>
       <form onSubmit={handleSubmit(onSubmit)} class="form-login">
-        <input {...register("email")} placeholder="Email" required></input>
+        <input {...register("email")} placeholder="Email" type="email" required></input>
         <input
           {...register("password")}
           placeholder="Password"
@@ -61,8 +61,8 @@ function Login(props) {
           top: "160px",}}
         />
 
+        {error ? <h2 className="error">{error}</h2> : <></>}
         <input type="submit" value="Đăng Nhập"></input>
-        {error ? <h2>{error}</h2> : <></>}
         <span>Bạn chưa có tài khoản? <Link to="/register">Tạo tài khoản</Link></span>
       </form>
     </div>
