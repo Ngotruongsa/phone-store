@@ -8,6 +8,7 @@ import {Link} from 'react-router-dom';
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import showPwdImg from '../../assets/svg/show-password.svg';
 import hidePwdImg from '../../assets/svg/hide-password.svg';
+import { message} from 'antd';
 
 function Login(props) {
     const dispatch = useDispatch()
@@ -15,6 +16,9 @@ function Login(props) {
     const [confirmPassword, setConfirmPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false);
     const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+    const [emailExists, setEmailExists] = useState('');
+
+    const history = useHistory();
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm()
 
@@ -26,12 +30,33 @@ function Login(props) {
       setShowRepeatPassword(!showRepeatPassword);
     };
 
-    const onSubmit = data => {
+    const success = () => {
+      message.success({
+          content: 'Đăng ký thành công',
+          duration: 2,
+          className: 'custom-class',
+          style: {
+              position: 'absolute',
+              right: '2rem',
+              top: '2rem',
+              margin: '1rem 0'
+          },
+        });
+    };
+
+    const onSubmit = async (data) => {
         if(password === confirmPassword) {
-            dispatch(SignupUser(data))            
+          try {
+            await dispatch(SignupUser(data));
+            history.push("/login")
+            success()
+        } catch (error) {
+            setEmailExists(error.message);
+        }            
         } else{
             alert("wrong repeat password")
         }
+        
     }
   
     return (
@@ -44,7 +69,9 @@ function Login(props) {
             placeholder="Email"
             type="email"
             required
+            onChange={() => setEmailExists('')}
           ></input>
+          
           <input
             {...register("password")}
             placeholder="Password"
@@ -80,7 +107,8 @@ function Login(props) {
           top: "400px",}}
         />
 
-          <input type="submit" value="Đăng Kí"></input>
+          {emailExists && <p className="error-message">Email đã tồn tại</p>}
+          <input type="submit" value="Đăng Ký"></input>
         </form>
           <span>Bạn đã có tài khoản? <Link to="/login">Đăng nhập ngay</Link></span>
       </div>
