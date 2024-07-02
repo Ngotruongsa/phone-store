@@ -16,8 +16,9 @@ export const SignupUser = (user) => async (dispatch) => {
       const {data} = await axios.post('http://localhost:4000/user/register', user)
       localStorage.setItem('userInfo', JSON.stringify(data));
       dispatch({ type: 'USER_SIGNUP_SUCCESS', payload: data });
-      document.location.href = '/';
+      // document.location.href = '/';
     } catch (error) {
+      throw new Error(error.response.data.message);
     }
 };
 
@@ -79,6 +80,7 @@ export const changePassword = (userId, oldPassword, newPassword) => async (dispa
         ? error.response.data.message
         : error.message,
     });
+    throw new Error(error.response.data.message);
   }
 };
 

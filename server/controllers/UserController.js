@@ -9,13 +9,18 @@ export const getAllUser = (req, res) => {
 }
 
 export const registerUser = expressAsyncHandler(async (req, res) => {
+    const existingUser = await UserModel.findOne({ email: req.body.email });
+
+  if (existingUser) {
+    return res.status(400).send({ message: 'Email đã tồn tại' });
+  }
     const user = new UserModel({
         // _id: req.body._id,
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        address: req.body.address,
-        phone: req.body.phone,
+        address: req.body.address || '',
+        phone: req.body.phone || '',
         isAdmin: false,
     })
     const createUser = user.save();
@@ -60,21 +65,21 @@ export const DeleteUser = expressAsyncHandler(async (req, res) => {
 })
 
 export const changePassword = expressAsyncHandler(async (req, res) => {
-    const user = await UserModel.findById({_id: req.params.id});
+    const user = await UserModel.findById(req.params.id);
     const { oldPassword, newPassword } = req.body;
-
-    if(user){
-        if(user.password !== oldPassword) {
-            res.status(400).send({message: 'Old password is incorrect'});
-        } else {
-            user.password = newPassword;
-            await user.save();
-            res.send({message: 'Password changed successfully'});
-        }
-    }else{
-        res.send({message: 'User not exists'});
+  
+    if (user) {
+      if (user.password !== oldPassword) {
+        res.status(400).send({ message: 'Mật khẩu cũ không đúng !' });
+      } else {
+        user.password = newPassword;
+        await user.save();
+        res.send({ message: 'Thay đổi mật khẩu thành công' });
+      }
+    } else {
+      res.status(404).send({ message: 'User not exists' });
     }
-});
+  });
 
 export const updateUser = expressAsyncHandler(async (req, res) => {
     const user = await UserModel.findById(req.params.id);
