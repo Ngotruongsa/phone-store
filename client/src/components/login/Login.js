@@ -46,12 +46,12 @@ function Login(props) {
 
   const onSubmit = (data) => {
     dispatch(login(data));
-    success()
   };
 
   useEffect(() => {
     if (userInfo) {
       history.push("/");
+      success()
     }
   });
 
