@@ -8,6 +8,7 @@ import {Link} from 'react-router-dom';
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import showPwdImg from '../../assets/svg/show-password.svg';
 import hidePwdImg from '../../assets/svg/hide-password.svg';
+import { message } from 'antd';
 
 function Login(props) {
   const dispatch = useDispatch();
@@ -29,8 +30,23 @@ function Login(props) {
     setShowPassword(!showPassword);
   };
 
+  const success = () => {
+    message.success({
+        content: 'Đăng nhập thành công',
+        duration: 2,
+        className: 'custom-class',
+        style: {
+            position: 'absolute',
+            right: '2rem',
+            top: '2rem',
+            margin: '1rem 0'
+        },
+      });
+  };
+
   const onSubmit = (data) => {
     dispatch(login(data));
+    success()
   };
 
   useEffect(() => {
