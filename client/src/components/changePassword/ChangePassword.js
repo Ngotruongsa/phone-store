@@ -15,6 +15,8 @@ function ChangePassword(prop) {
   const [newPassword, setNewPassword] = useState("");
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
+  const [oldPasswordError, setOldPasswordError] = useState("");
+
   const dispatch = useDispatch();
   const history = useHistory();
   const {
@@ -30,7 +32,7 @@ function ChangePassword(prop) {
   const success = () => {
     message.success({
         content: 'Thay đổi mật khẩu thành công',
-        duration: 1,
+        duration: 2,
         className: 'custom-class',
         style: {
             position: 'absolute',
@@ -41,12 +43,19 @@ function ChangePassword(prop) {
       });
   };
 
-  const onSubmit = (data) => {
-    dispatch(changePassword(userInfo._id, data.oldPassword, data.newPassword));
-    setOldPassword("");
-    setNewPassword("");
-    reset();
-    success()
+    const onSubmit = async (data) => {
+    try {
+      await dispatch(changePassword(userInfo._id, data.oldPassword, data.newPassword));
+      setOldPassword("");
+      setNewPassword("");
+      reset();
+      setOldPasswordError("");
+      success();
+    } catch (error) {
+      if (error.message === 'Mật khẩu cũ không đúng !') {
+        setOldPasswordError(error.message);
+      }
+    }
   };
 
   const handleClickShowOldPassword = () => {
@@ -76,7 +85,10 @@ function ChangePassword(prop) {
           placeholder="Mật khẩu cũ"
           type={showOldPassword ? "text" : "password"}
           value={oldPassword}
-          onChange={(e) => setOldPassword(e.target.value)}
+          onChange={(e) => {
+            setOldPassword(e.target.value);
+            setOldPasswordError("");
+          }}
           className={errors.newPassword ? "input-error" : ""}
           required
         />
@@ -86,6 +98,12 @@ function ChangePassword(prop) {
           onClick={handleClickShowOldPassword}
         />
         </div>
+        {errors.oldPassword && (
+            <span className="error-message">{errors.oldPassword.message}</span>
+          )}
+          {oldPasswordError && (
+            <span className="error-message">{oldPasswordError}</span>
+          )}
         {errors.oldPassword && (
           <span className="error-message">{errors.oldPassword.message}</span>
         )}
