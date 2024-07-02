@@ -27,7 +27,7 @@ function Profile(prop) {
   const success = () => {
     message.success({
         content: 'Cập nhật thông tin thành công',
-        duration: 1,
+        duration: 2,
         className: 'custom-class',
         style: {
             position: 'absolute',
