@@ -4,7 +4,11 @@ import {
   createOrderGhn,
   PrintOrderGhn,
 } from "../../../../../actions/GhnAction";
-import { deleteOrder, getAllOrder, ShippingOrder } from "../../../../../actions/OrderAction";
+import {
+  deleteOrder,
+  getAllOrder,
+  ShippingOrder,
+} from "../../../../../actions/OrderAction";
 import {
   formatPrice,
   formatDateOrderPaypal,
@@ -25,7 +29,7 @@ function Order(props) {
   } = order;
 
   const handleShippingOrder = async (order) => {
-    console.log('handleShippingOrder')
+    console.log("handleShippingOrder");
     await dispatch(createOrderGhn(order._id)); // create order in giaohangnhanh
     await dispatch(ShippingOrder(order._id));
 
@@ -37,9 +41,9 @@ function Order(props) {
   };
 
   const handleDeleteOrder = async (order) => {
-    await dispatch(deleteOrder(order._id))
-    dispatch(getAllOrder())
-  }
+    await dispatch(deleteOrder(order._id));
+    dispatch(getAllOrder());
+  };
 
   return (
     <>
@@ -50,7 +54,7 @@ function Order(props) {
               <span className="img">
                 <img src={item.image}></img>
               </span>
-              <span className="qty">Qty: {item.qty}</span>
+              <span className="qty">Số lượng: {item.qty}</span>
               <span className="name">{item.name}</span>
               <span className="price">{formatPrice(item.salePrice)}</span>
             </div>
@@ -61,11 +65,13 @@ function Order(props) {
         </div>
         <div className="order-info">
           <div className="order-info-address">
-            <b>Địa chỉ : </b> {"  "}
-            {shippingAddress.name},{""}
-            {shippingAddress.province}, {shippingAddress.district},{"  "}
-            {shippingAddress.ward}, {shippingAddress.detail},{" "}
-            {shippingAddress.phone}
+            <b>Tên khách hàng (Người nhận): </b> {shippingAddress.name}
+            {""}
+            <br></br>
+            <b>Địa chỉ: </b> {"  "}
+            {shippingAddress.detail}, {shippingAddress.ward},{"  "}
+            {shippingAddress.district}, {shippingAddress.province} <br></br>
+            <b>Số điện thoại: </b> {shippingAddress.phone}
           </div>
         </div>
 
@@ -102,23 +108,24 @@ function Order(props) {
                 >
                   Xác nhận đơn hàng
                 </button>
-
               </>
-            ) : (''
+            ) : (
+              ""
             )}
 
-            {
-              cancelOrder === true ? (<>
-              <span> Khách yêu cầu hủy đơn </span>
+            {cancelOrder === true ? (
+              <>
+                <span> Khách yêu cầu hủy đơn </span>
                 <button
                   className="shipping"
                   onClick={() => handleDeleteOrder(order)}
                 >
                   Hủy đơn
                 </button>
-
-              </>) : ''
-            }
+              </>
+            ) : (
+              ""
+            )}
 
             {/* {status === "shipping" ? (
               <button
