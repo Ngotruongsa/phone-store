@@ -11,6 +11,7 @@ import {
 } from "../../../../../actions/OrderAction";
 import {
   formatPrice,
+  formatDateCreateOrder,
   formatDateOrderPaypal,
 } from "../../../../../untils/index";
 
@@ -72,6 +73,8 @@ function Order(props) {
             {shippingAddress.detail}, {shippingAddress.ward},{"  "}
             {shippingAddress.district}, {shippingAddress.province} <br></br>
             <b>Số điện thoại: </b> {shippingAddress.phone}
+            <br></br>
+            <b>Ngày tạo: </b> {formatDateCreateOrder(order.createdAt)}
           </div>
         </div>
 

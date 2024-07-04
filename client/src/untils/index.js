@@ -24,6 +24,18 @@
         return formatter.format(price)
     }
 
+    export const formatDateCreateOrder = (timestamp) => {
+        const d = new Date(timestamp);
+        const hours = d.getHours().toString().padStart(2, '0');
+        const minutes = d.getMinutes().toString().padStart(2, '0');
+        const seconds = d.getSeconds().toString().padStart(2, '0');
+        const day = d.getDate().toString().padStart(2, '0');
+        const month = (d.getMonth() + 1).toString().padStart(2, '0'); // getMonth() is zero-based
+        const year = d.getFullYear();
+        const formattedDate = `${hours}:${minutes}:${seconds} ${day}-${month}-${year}`;
+        return formattedDate;
+    };
+
     export const getFirstCharacterUser = (name) => {
         const arrCharacter = name.split('')[0]
         return arrCharacter
