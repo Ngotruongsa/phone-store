@@ -37,7 +37,7 @@ function FilterProduct(props) {
           placeholder="đ ĐẾN"
           onChange={(e) => setEndPrice(e.target.value)}
         ></input>
-        <button onClick={() => FilterProductByPrice(startPrice, endPrice)}>
+        <button style={{cursor: 'pointer'}} onClick={() => FilterProductByPrice(startPrice, endPrice)}>
           Tìm
         </button>
       </div>
