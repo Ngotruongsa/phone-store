@@ -94,7 +94,7 @@ function Header(props) {
                   {userInfo.isAdmin ? <Link to="/admin">Admin</Link> : ""}
                   <Link to="/profile">Tài khoản của tôi</Link>
                   <Link to="/password">Đổi mật khẩu</Link>
-                  <Link to="/myOrder">Đơn hàng</Link>
+                  <Link to="/myOrder/pendding">Đơn hàng</Link>
                   <Link onClick={() => handleSignout()}>Đăng xuất</Link>
                   <ul style={{display: "flex"}}>
                     <li>
