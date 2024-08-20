@@ -24,7 +24,7 @@ export default function VnPaySuccess() {
         <p>Đặt hàng thành công</p>
         {/* <Link to="">OK</Link> */}
         <div className="links">
-          <Link to="/myOrder">Xem lại đơn hàng</Link>
+          <Link to="/myOrder/pendding">Xem lại đơn hàng</Link>
           <Link to="/">Trang chủ</Link>
         </div>
 
