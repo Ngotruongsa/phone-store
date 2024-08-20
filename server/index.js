@@ -1,61 +1,75 @@
-import express from 'express'
-import cors from 'cors'
-import dotenv from 'dotenv'
+const express = require("express");
+const cors = require("cors");
+const dotenv = require("dotenv");
 
-import connectDB from './config/db/db.js'
+const connectDB = require("./config/db/db.js");
 
-import ProductRouter from './routers/ProductRouter.js'
-import UserRouter from './routers/UserRouter.js'
-import OrderRouter from './routers/OrderRouter.js'
-import ChatRouter from './routers/ChatRouter.js'
+const ProductRouter = require("./routers/ProductRouter.js");
+const UserRouter = require("./routers/UserRouter.js");
+const OrderRouter = require("./routers/OrderRouter.js");
+const ChatRouter = require("./routers/ChatRouter.js");
 
-import {createServer} from 'http'
-// import {Server} from 'socket.io'
+const { createServer } = require("http");
+// const { Server } = require ("socket.io");
 
-import {ConnectSocket} from './config/socket/socket.js'
+const ConnectSocket = require("./config/socket/socket.js");
 
-import cloudinary from './config/cloudinary/cloudinary.js'
-import PaymentRouter from './routers/PaymentRouter.js'
-import SelectListrouter from './routers/SelectListRouter.js'
-import ListTypeProductRouter from './routers/ListTypeProductRouter.js'
+const cloudinary = require("./config/cloudinary/cloudinary.js");
+const PaymentRouter = require("./routers/PaymentRouter.js");
+const SelectListRouter = require("./routers/SelectListRouter.js"); // Sửa tên biến
+const ListTypeProductRouter = require("./routers/ListTypeProductRouter.js");
+//const Root = require ("./routers/Root.Router.js");
+
+const Root = require("./routers/Root.Router.js"); // Thay require bằng const
 
 dotenv.config();
 process.env.TOKEN_SECRET;
 
-const app = express()
-const PORT = process.env.PORT || 4000
-const server = createServer(app)
+const app = express();
+const PORT = process.env.PORT || 4000;
+const server = createServer(app);
 
-ConnectSocket(server)
-connectDB()
+ConnectSocket(server);
+connectDB();
 
-app.use(cors())
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ limit: '50mb', extended: true }));
+app.use(cors());
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
-app.use('/products', ProductRouter)
-app.use('/user', UserRouter)
-app.use('/order', OrderRouter)
-app.use('/chat', ChatRouter)
-app.use('/payment', PaymentRouter)
-app.use('/selectList', SelectListrouter)
-app.use('/typeList', ListTypeProductRouter)
+app.use("/", Root);
 
-app.get('/api/config/paypal', (req, res) => {
-    res.send(process.env.PAYPAL_CLIENT_ID || 'sb')
-})
+//app.use("/products", ProductRouter);
+//app.use("/user", UserRouter);
+//app.use("/order", OrderRouter);
+//app.use("/chat", ChatRouter);
+//app.use("/payment", PaymentRouter);
+//app.use("/selectList", SelectListRouter);
+//app.use("/typeList", ListTypeProductRouter);
 
-app.post('/api/upload', async (req, res) => {
-    try {
-        const fileStr = req.body.data;
-        const uploadResponse = await cloudinary.uploader.upload(fileStr, {
-            upload_preset: 'dev_setups',
-        });
-        res.json({ msg: 'yaya' });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ err: 'Something went wrong' });
-    }
+app.get("/api/config/paypal", (req, res) => {
+  res.send(process.env.PAYPAL_CLIENT_ID || "sb");
 });
 
-server.listen(PORT, () => console.log(`server running on port ${PORT}`))
+app.post("/api/upload", async (req, res) => {
+  try {
+    const fileStr = req.body.data;
+    const uploadResponse = await cloudinary.uploader.upload(fileStr, {
+      upload_preset: "dev_setups",
+    });
+    res.json({ msg: "yaya" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ err: "Something went wrong" });
+  }
+});
+
+app.get("/", (req, res) => {
+  res.status(200).json({
+    status: true,
+    data: "ok",
+  });
+});
+
+server.listen(PORT, () =>
+  console.log(`server running on port ${PORT} : http://localhost:${PORT}`)
+);

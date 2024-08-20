@@ -1,47 +1,46 @@
-import {ProductModel} from '../models/ProductModel.js'
-import expressAsyncHandler from 'express-async-handler'
-import { PinComment } from '../untils/until.js'
-import cloudinary from 'cloudinary'
-import {data} from '../data.js'
+const ProductModel = require("../models/ProductModel.js");
+const expressAsyncHandler = require("express-async-handler");
+const { PinComment } = require("../untils/until.js");
+const cloudinary = require("cloudinary");
+const { data } = require("../data.js");
 
-export const getAllProduct = expressAsyncHandler(async (req, res) => {
-    // await ProductModel.remove()
-    // const product = await ProductModel.insertMany(data.products)
-    // ProductModel.find()
-    //     .then(product => res.send(product))
-    //     .catch(err => console.log(err))
-    const products = await ProductModel.find({})
-    res.send(products)
-})
+const getAllProduct = expressAsyncHandler(async (req, res) => {
+  // await ProductModel.remove()
+  // const product = await ProductModel.insertMany(data.products)
+  // ProductModel.find()
+  //     .then(product => res.send(product))
+  //     .catch(err => console.log(err))
+  const products = await ProductModel.find({});
+  res.send(products);
+});
 
-export const findProductById = expressAsyncHandler(async (req, res) => {
-    const product = await ProductModel.findById({_id: req.params.id})
-    
-    if(product){
-        res.send(product)
-    }else{
-        res.send({message: 'product not found'})
-    }
-})
+const findProductById = expressAsyncHandler(async (req, res) => {
+  const product = await ProductModel.findById({ _id: req.params.id });
 
-export const filterProductByType =  expressAsyncHandler(async (req, res) => {
-    // ProductModel.find({type: req.params.type})
-    //     .then(product => res.send(product))
-    //     .catch(err => console.log(err))
+  if (product) {
+    res.send(product);
+  } else {
+    res.send({ message: "product not found" });
+  }
+});
 
-    const filterProductByType = await ProductModel.find({type: req.params.type}).limit(5)
-    res.send(filterProductByType)
-})
+const filterProductByType = expressAsyncHandler(async (req, res) => {
+  const filterProductByType = await ProductModel.find({
+    type: req.params.type,
+  }).limit(5);
 
-export const filterProductByRandomField = expressAsyncHandler(async (req, res) => {
-    const products = await ProductModel.find(req.body)
-    if(products){
-        res.send(products)
-    }else{
-        res.send({message: 'product not found'})
-    }
-})
-export const AddProduct = expressAsyncHandler(async (req, res) => {
+  res.send(filterProductByType);
+});
+
+const filterProductByRandomField = expressAsyncHandler(async (req, res) => {
+  const products = await ProductModel.find(req.body);
+  if (products) {
+    res.send(products);
+  } else {
+    res.send({ message: "product not found" });
+  }
+});
+const AddProduct = expressAsyncHandler(async (req, res) => {
   const result = await cloudinary.uploader.upload(req.file.path, {
     folder: "dev_setups",
   });
@@ -51,7 +50,7 @@ export const AddProduct = expressAsyncHandler(async (req, res) => {
     price: req.body.price,
     salePrice: req.body.salePrice,
     amount: req.body.amount,
-    type: req.body.type || 'iphone',
+    type: req.body.type || "iphone",
     image: result.secure_url,
     cloudinary_id: result.public_id,
     rating: 0,
@@ -76,7 +75,7 @@ export const AddProduct = expressAsyncHandler(async (req, res) => {
   }
 });
 
-export const UpdateProduct = expressAsyncHandler(async (req, res) => {
+const UpdateProduct = expressAsyncHandler(async (req, res) => {
   const product = await ProductModel.findById(req.body._id);
 
   await cloudinary.uploader.destroy(product.cloudinary_id);
@@ -114,111 +113,131 @@ export const UpdateProduct = expressAsyncHandler(async (req, res) => {
   return res.send("update fail");
 });
 
-export const DeleteProduct = expressAsyncHandler(async (req, res) => {
-    const deleteProduct = await ProductModel.findById(req.params.id)
+const DeleteProduct = expressAsyncHandler(async (req, res) => {
+  const deleteProduct = await ProductModel.findById(req.params.id);
 
-    // await cloudinary.uploader.destroy(deleteProduct.cloudinary_id);
+  // await cloudinary.uploader.destroy(deleteProduct.cloudinary_id);
 
-    if(deleteProduct){
-        await deleteProduct.remove()
-        res.send({message: 'product deleted'})
-    } else{
-        res.send('error in deletetion')
+  if (deleteProduct) {
+    await deleteProduct.remove();
+    res.send({ message: "product deleted" });
+  } else {
+    res.send("error in deletetion");
+  }
+});
+
+const SearchProduct = expressAsyncHandler(async (req, res) => {
+  const name = req.query.name;
+  const product = await ProductModel.find({
+    name: { $regex: name, $options: "i" },
+  });
+
+  product.length > 0
+    ? res.send(product)
+    : res.send({ message: " khong tim thay sp" });
+});
+
+const paginationProduct = expressAsyncHandler(async (req, res) => {
+  var perPage = 4;
+  var page = req.params.page || 1;
+  ProductModel.find({})
+    .skip(perPage * page - perPage)
+    .limit(perPage)
+    .exec(function (err, products) {
+      ProductModel.countDocuments().exec(function (err, count) {
+        if (err) return next(err);
+        res.send({
+          products: products,
+          current: page,
+          pages: Math.ceil(count / perPage),
+        });
+      });
+    });
+});
+
+const RateProduct = expressAsyncHandler(async (req, res) => {
+  const product = await ProductModel.findById(req.params.id);
+  if (product) {
+    const existsUser = product.reviews.find((x) => x.name === req.body.name);
+    if (existsUser) {
+      res.send({ message: "ban da danh gia san pham nay" });
+    } else {
+      product.reviews.push(req.body);
+      const updateProduct = await product.save();
+      res.send(updateProduct);
     }
-})
+  } else {
+    res.status(400).send({ message: "product not found" });
+  }
+});
 
-export const SearchProduct = expressAsyncHandler(async (req, res) => {
-    const name = req.query.name
-    const product = await ProductModel.find({name: {$regex: name, $options: 'i'}})
-    
-    product.length > 0 ? res.send(product) : res.send({message: ' khong tim thay sp'})
-})
+const CommentProduct = expressAsyncHandler(async (req, res) => {
+  const product = await ProductModel.findById(req.params.id);
+  if (product) {
+    product.comments.push(req.body);
+    const updateCommentProduct = await product.save();
+    res.send(updateCommentProduct);
+  } else {
+    res.status(400).send({ message: "product not found" });
+  }
+});
 
-export const paginationProduct = expressAsyncHandler(async (req, res) => {
-    var perPage = 4
-    var page = req.params.page || 1
-    ProductModel
-        .find({})
-        .skip((perPage * page) - perPage)
-        .limit(perPage)
-        .exec(function(err, products) {
-            ProductModel.countDocuments().exec(function(err, count) {
-                if (err) return next(err)
-                res.send({
-                    products: products,
-                    current: page,
-                    pages: Math.ceil(count / perPage)
-                })
-            })
-        })
-})
+const RepCommentProduct = expressAsyncHandler(async (req, res) => {
+  const product = await ProductModel.findById(req.params.id);
+  if (product) {
+    const indexComment = product.comments.findIndex(
+      (item) => item._id == req.body.idComment
+    );
+    product.comments[indexComment].replies.push(req.body);
 
-export const RateProduct = expressAsyncHandler(async (req, res) => {
-    const product = await ProductModel.findById(req.params.id)
-    if(product){
-        const existsUser = product.reviews.find(x => x.name === req.body.name)
-        if(existsUser){
-            res.send({message: 'ban da danh gia san pham nay'})
-        }else{
-            product.reviews.push(req.body)
-            const updateProduct = await product.save()
-            res.send(updateProduct)
-        }
-        
-    }else{
-        res.status(400).send({message: 'product not found'})
-    }
+    await product.save();
+    res.send(product);
+  } else {
+    res.status(400).send({ message: "product not found" });
+  }
+});
 
-})
+const PinCommentProduct = expressAsyncHandler(async (req, res) => {
+  const product = await ProductModel.findById(req.params.id);
+  if (product) {
+    const indexComment = product.comments.findIndex(
+      (item) => item._id == req.body.idComment
+    );
+    product.comments[indexComment] = req.body;
+    PinComment(product.comments, indexComment, 0);
 
-export const CommentProduct = expressAsyncHandler(async (req, res) => {
-    const product = await ProductModel.findById(req.params.id)
-    if(product){
-        product.comments.push(req.body)
-        const updateCommentProduct = await product.save()
-        res.send(updateCommentProduct)
-    }else{
-        res.status(400).send({message: 'product not found'})
-    }
+    await product.save();
+    res.send(product);
+  } else {
+    res.status(400).send({ message: "product not found" });
+  }
+});
 
-})
+const BlogProduct = expressAsyncHandler(async (req, res) => {
+  const product = await ProductModel.findById({ _id: req.params.id });
 
-export const RepCommentProduct = expressAsyncHandler(async (req, res) => {
-    const product = await ProductModel.findById(req.params.id)
-    if(product){
-        const indexComment = product.comments.findIndex(item => item._id == req.body.idComment)
-        product.comments[indexComment].replies.push(req.body)
+  if (product) {
+    product.blog = req.body.blogContent;
+    await product.save();
+    res.send(product);
+  } else {
+    res.send({ message: "product not found" });
+  }
+});
 
-        await product.save()
-        res.send(product)
-    }else{
-        res.status(400).send({message: 'product not found'})
-    }
-
-})
-
-export const PinCommentProduct = expressAsyncHandler(async (req, res) => {
-    const product = await ProductModel.findById(req.params.id)
-    if(product){
-        const indexComment = product.comments.findIndex(item => item._id == req.body.idComment)
-        product.comments[indexComment] = req.body
-        PinComment(product.comments, indexComment, 0)
-
-        await product.save()
-        res.send(product)
-    }else{
-        res.status(400).send({message: 'product not found'})
-    }
-})
-
-export const BlogProduct = expressAsyncHandler(async (req, res) => {
-    const product = await ProductModel.findById({_id: req.params.id})
-    
-    if(product){
-        product.blog = req.body.blogContent
-        await product.save()
-        res.send(product)
-    }else{
-        res.send({message: 'product not found'})
-    }
-})
+module.exports = {
+  getAllProduct,
+  findProductById,
+  filterProductByType,
+  filterProductByRandomField,
+  AddProduct,
+  UpdateProduct,
+  DeleteProduct,
+  SearchProduct,
+  paginationProduct,
+  RateProduct,
+  CommentProduct,
+  RepCommentProduct,
+  PinCommentProduct,
+  BlogProduct,
+};

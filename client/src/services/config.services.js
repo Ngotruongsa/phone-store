@@ -1,16 +1,16 @@
-import axios from 'axios';
-import queryString from 'query-string';
-import { BASE_URL } from '../constants/UserConstant';
+import axios from "axios";
+import queryString from "query-string";
+import { BASE_URL } from "../constants/UserConstant";
 
 export const axiosClient = axios.create({
-  baseURL:BASE_URL,
+  baseURL: BASE_URL,
   headers: {
-    'content-type': 'application/json',
-    Accept: 'application/json',
+    "content-type": "application/json",
+    Accept: "application/json",
     // 'Access-Control-Allow-Origin': 'http://localhost:3000',
     // 'Access-Control-Allow-Credentials': true,
   },
-  paramsSerializer: params => {
+  paramsSerializer: (params) => {
     return queryString.stringify(params, {
       encode: false,
     });
@@ -24,13 +24,13 @@ export const axiosClient = axios.create({
 // });
 
 axiosClient.interceptors.response.use(
-  response => {
+  (response) => {
     if (response && response.data) {
       return response.data;
     }
     return response;
   },
-  error => {
+  (error) => {
     throw error;
-  },
+  }
 );

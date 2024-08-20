@@ -1,11 +1,11 @@
-import express from "express";
-import {
+const express = require("express");
+const {
   createOptionByproperty,
   deleteSelectOption,
   getAllOptionByproperty,
   getSelectOptionById,
   UpdateSelectOption,
-} from "../controllers/SelectListController.js";
+} = require("../controllers/SelectListController.js");
 
 const SelectListrouter = express.Router();
 
@@ -15,4 +15,4 @@ SelectListrouter.delete("/delete/:id", deleteSelectOption);
 SelectListrouter.post("/create", createOptionByproperty);
 SelectListrouter.put("/update/:id", UpdateSelectOption);
 
-export default SelectListrouter;
+module.exports = SelectListrouter;

@@ -1,19 +1,19 @@
-import { OrderModel } from "../models/OrderModel.js";
-import expressAsyncHandler from "express-async-handler";
-import dotenv from "dotenv";
+const OrderModel = require("../models/OrderModel.js");
+const expressAsyncHandler = require("express-async-handler");
+const dotenv = require("dotenv");
 
-import querystring from "qs";
-import sha256 from "sha256";
-import dateFormat from "dateformat";
-import crypto from 'crypto'
+const querystring = require("qs");
+const sha256 = require("sha256");
+const dateFormat = require("dateformat");
+const crypto = require("crypto");
 
 const tmnCode = process.env.VNP_TMN_CODE;
 const secretKey = process.env.VNP_HASH_SECRET;
 const url = process.env.VNP_URL;
 const returnUrl = process.env.VNP_RETURN_URL;
 
-export const createPayment = expressAsyncHandler(async (req, res) => {
-  console.log('createPayment')
+const createPayment = expressAsyncHandler(async (req, res) => {
+  console.log("createPayment");
   let ipAddr =
     req.headers["x-forwarded-for"] ||
     req.connection.remoteAddress ||
@@ -28,12 +28,12 @@ export const createPayment = expressAsyncHandler(async (req, res) => {
 
     orderItems: req.body.orderItems,
     shippingAddress: {
-      province: req.body.shippingAddress?.province || '',
-      district: req.body.shippingAddress?.district  || '',
-      ward: req.body.shippingAddress?.ward || '',
-      detail: req.body.shippingAddress?.more || '',
-      name: req.body.shippingAddress?.name || '',
-      phone: req.body.shippingAddress?.phone || '',
+      province: req.body.shippingAddress?.province || "",
+      district: req.body.shippingAddress?.district || "",
+      ward: req.body.shippingAddress?.ward || "",
+      detail: req.body.shippingAddress?.more || "",
+      name: req.body.shippingAddress?.name || "",
+      phone: req.body.shippingAddress?.phone || "",
     },
     paymentMethod: req.body.paymentMethod,
     paymentResult: req.body.paymentResult
@@ -57,7 +57,7 @@ export const createPayment = expressAsyncHandler(async (req, res) => {
 
   const createDate = dateFormat(date, "yyyymmddHHmmss");
   const orderId = order._id.toString();
-  console.log({orderId})
+  console.log({ orderId });
   // var orderId = dateFormat(date, 'HHmmss');
 
   var locale = "vn";
@@ -104,7 +104,7 @@ export const createPayment = expressAsyncHandler(async (req, res) => {
   // new code
   // var hmac = crypto.createHmac("sha512", secretKey);
   // console.log({hmac})
-  // var signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex"); 
+  // var signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex");
   // vnp_Params['vnp_SecureHash'] = signed;
   // vnpUrl += '?' + querystring.stringify(vnp_Params, { encode: false });
   // end
@@ -114,13 +114,13 @@ export const createPayment = expressAsyncHandler(async (req, res) => {
   vnp_Params["vnp_SecureHashType"] = "SHA256";
   vnp_Params["vnp_SecureHash"] = secureHash;
   vnpUrl += "?" + querystring.stringify(vnp_Params, { encode: false });
-  console.log({ code: "00", data: vnpUrl })
+  console.log({ code: "00", data: vnpUrl });
 
   res.status(200).json({ code: "00", data: vnpUrl });
 });
 
-export const returnPayment = expressAsyncHandler(async (req, res) => {
-  console.log('returnPayment')
+const returnPayment = expressAsyncHandler(async (req, res) => {
+  console.log("returnPayment");
   try {
     let vnp_Params = req.query;
     const secureHash = vnp_Params.vnp_SecureHash;
@@ -144,9 +144,9 @@ export const returnPayment = expressAsyncHandler(async (req, res) => {
 
     // res.status(200).json({ code: vnp_Params.vnp_ResponseCode });
     if (secureHash === checkSum) {
-      console.log('if 1')
+      console.log("if 1");
       if (vnp_Params.vnp_ResponseCode == "00") {
-        console.log('if 2')
+        console.log("if 2");
         res.status(200).json({ code: vnp_Params.vnp_ResponseCode });
       } else {
         const DeleteOrder = await OrderModel.findById({ _id: id });
@@ -154,7 +154,7 @@ export const returnPayment = expressAsyncHandler(async (req, res) => {
         res.status(200).json({ code: vnp_Params.vnp_ResponseCode });
       }
     } else {
-      console.log('else')
+      console.log("else");
       res.status(200).json({ code: "97" });
     }
   } catch (error) {
@@ -162,8 +162,8 @@ export const returnPayment = expressAsyncHandler(async (req, res) => {
   }
 });
 
-export const inpPayment = async (req, res) => {
-  console.log('inpPayment')
+const inpPayment = async (req, res) => {
+  console.log("inpPayment");
   let vnp_Params = req.query;
   const secureHash = vnp_Params.vnp_SecureHash;
 
@@ -178,7 +178,7 @@ export const inpPayment = async (req, res) => {
   const checkSum = sha256(signData);
 
   const id = vnp_Params.vnp_TxnRef;
-  
+
   if (secureHash === checkSum) {
     var orderId = vnp_Params["vnp_TxnRef"];
     var rspCode = vnp_Params["vnp_ResponseCode"];
@@ -207,3 +207,9 @@ function sortObject(o) {
   }
   return sorted;
 }
+
+module.exports = {
+  createPayment,
+  returnPayment,
+  inpPayment,
+};

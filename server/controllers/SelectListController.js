@@ -1,9 +1,9 @@
-import expressAsyncHandler from "express-async-handler";
-import { SelectListModel } from "../models/SelectListModel.js";
-import cloudinary from "cloudinary";
-import SelectListrouter from "../routers/SelectListRouter.js";
+const expressAsyncHandler = require("express-async-handler");
+const SelectListModel = require("../models/SelectListModel.js");
+const cloudinary = require("cloudinary");
+const SelectListrouter = require("../routers/SelectListRouter.js");
 
-export const createOptionByproperty = expressAsyncHandler(async (req, res) => {
+const createOptionByproperty = expressAsyncHandler(async (req, res) => {
   const SelectListItem = new SelectListModel({
     name: req.body.name,
     property: req.body.property,
@@ -13,7 +13,7 @@ export const createOptionByproperty = expressAsyncHandler(async (req, res) => {
   res.send(SelectListItem);
 });
 
-export const getAllOptionByproperty = expressAsyncHandler(async (req, res) => {
+const getAllOptionByproperty = expressAsyncHandler(async (req, res) => {
   const SelectList = await SelectListModel.find({});
   if (SelectList) {
     res.send(SelectList);
@@ -22,7 +22,7 @@ export const getAllOptionByproperty = expressAsyncHandler(async (req, res) => {
   }
 });
 
-export const UpdateSelectOption = expressAsyncHandler(async (req, res) => {
+const UpdateSelectOption = expressAsyncHandler(async (req, res) => {
   const UpdateSelect = await SelectListModel.findById({ _id: req.params.id });
   if (UpdateSelect) {
     UpdateSelect.name = req.body.name;
@@ -34,7 +34,7 @@ export const UpdateSelectOption = expressAsyncHandler(async (req, res) => {
   res.send(UpdateSelect);
 });
 
-export const getSelectOptionById = expressAsyncHandler(async (req, res) => {
+const getSelectOptionById = expressAsyncHandler(async (req, res) => {
   const UpdateSelect = await SelectListModel.findById({ _id: req.params.id });
   if (UpdateSelect) {
     res.send(UpdateSelect);
@@ -43,9 +43,17 @@ export const getSelectOptionById = expressAsyncHandler(async (req, res) => {
   }
 });
 
-export const deleteSelectOption = expressAsyncHandler(async (req, res) => {
+const deleteSelectOption = expressAsyncHandler(async (req, res) => {
   const UpdateSelect = await SelectListModel.findById({ _id: req.params.id });
   await UpdateSelect.remove();
 
   res.send({ msg: "deleted select" });
 });
+
+module.exports = {
+  createOptionByproperty,
+  getAllOptionByproperty,
+  UpdateSelectOption,
+  getSelectOptionById,
+  deleteSelectOption,
+};

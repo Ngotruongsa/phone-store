@@ -14,19 +14,19 @@ import Logo from "../../../../assets/images/logo-admin.jpg";
 
 function Sidebar(props) {
   const dispatch = useDispatch();
-  const location = useLocation()
+  const location = useLocation();
   const { orderPendding } = useSelector((state) => state.allOrder);
-  let totalNewOrder
-  
-  if(orderPendding){
-    totalNewOrder = orderPendding.length
+  let totalNewOrder;
+
+  if (orderPendding) {
+    totalNewOrder = orderPendding.length;
   }
 
   useEffect(() => {
     const getNewOrder = () => {
       dispatch(GetAllOrderPendding());
-    }
-    getNewOrder()
+    };
+    getNewOrder();
   }, [dispatch]);
 
   return (
@@ -35,36 +35,41 @@ function Sidebar(props) {
         <img src={Logo}></img>
       </div>
       <div className="sidebar-list">
-        <Link to="/admin" className={'sidebar-list-item'}>
+        <Link to="/admin" className={"sidebar-list-item"}>
           <span>
             <AppstoreOutlined></AppstoreOutlined>
           </span>
           <p>Dashboard</p>
         </Link>
-        <Link to="/admin/customer" className={'sidebar-list-item'}>
+        <Link to="/admin/customer" className={"sidebar-list-item"}>
           <span>
             <UsergroupAddOutlined></UsergroupAddOutlined>
           </span>
           <p>Customer</p>
         </Link>
-        <Link to="/admin/product" className={'sidebar-list-item'}>
+        <Link to="/admin/product" className={"sidebar-list-item"}>
           <span>
             <ShopOutlined></ShopOutlined>
           </span>
           <p>Products</p>
         </Link>
-        <Link to="/admin/order" className={'sidebar-list-item'}>
+        <Link to="/admin/order" className={"sidebar-list-item"}>
           <span>
             <OrderedListOutlined></OrderedListOutlined>
           </span>
           <p>
             Order
-            <div className="admin-order-new">
-                {totalNewOrder}
-              </div>
+            <div className="admin-order-new">{totalNewOrder}</div>
           </p>
         </Link>
-        <Link to="/admin/chat" className={location.pathname === '/admin/chat' ? 'sidebar-list-item active': 'sidebar-list-item'}>
+        <Link
+          to="/admin/chat"
+          className={
+            location?.pathname === "/admin/chat"
+              ? "sidebar-list-item active"
+              : "sidebar-list-item"
+          }
+        >
           <span>
             <WechatOutlined></WechatOutlined>
           </span>

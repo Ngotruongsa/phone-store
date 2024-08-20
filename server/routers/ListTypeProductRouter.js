@@ -1,10 +1,10 @@
-import express from "express";
-import {
+const express = require("express");
+const {
   createNewTypeProduct,
   deleteTypeProduct,
   getAllTypeProduct,
-} from "../controllers/ListTypeProductController.js";
-import  {upload}  from "../untils/until.js";
+} = require("../controllers/ListTypeProductController.js");
+const { upload } = require("../untils/until.js");
 
 const ListTypeProductRouter = express.Router();
 
@@ -14,9 +14,6 @@ ListTypeProductRouter.post(
   upload.single("image"),
   createNewTypeProduct
 );
-ListTypeProductRouter.delete(
-  "/delete/:id",
-  deleteTypeProduct
-);
+ListTypeProductRouter.delete("/delete/:id", deleteTypeProduct);
 
-export default ListTypeProductRouter;
+module.exports = ListTypeProductRouter;

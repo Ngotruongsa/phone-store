@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
 const SelectList = new Schema(
   {
@@ -13,4 +13,6 @@ const SelectList = new Schema(
   }
 );
 
-export const SelectListModel = mongoose.model("SelectList", SelectList);
+const SelectListModel = mongoose.model("SelectList", SelectList);
+
+module.exports = SelectListModel;

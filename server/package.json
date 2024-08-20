@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "start": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.21.4",
+    "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.19.0",
     "cloudinary": "^1.41.3",
@@ -23,17 +23,17 @@
     "express": "^4.19.2",
     "express-async-handler": "^1.2.0",
     "i": "^0.3.7",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^5.13.22",
     "mongoose-slug-generator": "^1.0.4",
     "multer": "^1.4.4",
-    "npm": "^9.6.7",
+    "npm": "^10.8.2",
     "path": "^0.12.7",
     "querystring": "^0.2.1",
     "sha256": "^0.2.0",
     "socket.io": "^4.7.5"
   },
   "devDependencies": {
-    "nodemon": "^2.0.22"
+    "nodemon": "^3.1.4"
   }
 }

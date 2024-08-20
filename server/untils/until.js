@@ -1,8 +1,7 @@
-import jwt from 'jsonwebtoken'
-import multer from "multer";
-import path from "path";
-
-export const generateToken = (user) => {
+const jwt = require("jsonwebtoken");
+const multer = require("multer");
+const path = require("path");
+const generateToken = (user) => {
   return jwt.sign(
     {
       _id: user._id,
@@ -19,7 +18,7 @@ export const generateToken = (user) => {
   );
 };
 
-export const isAuth = (req, res, next) => {
+const isAuth = (req, res, next) => {
   const authorization = req.headers.authorization;
   if (authorization) {
     const token = authorization.slice(7, authorization.length); // Bearer
@@ -40,7 +39,7 @@ export const isAuth = (req, res, next) => {
   }
 };
 
-export const isAdmin = (req, res, next) => {
+const isAdmin = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     next();
   } else {
@@ -48,7 +47,7 @@ export const isAdmin = (req, res, next) => {
   }
 };
 
-export const upload = multer({
+const upload = multer({
   storage: multer.diskStorage({}),
   fileFilter: (req, file, cb) => {
     let ext = path.extname(file.originalname);
@@ -60,7 +59,7 @@ export const upload = multer({
   },
 });
 
-export function PinComment(arr, fromIndex, toIndex) {
+function PinComment(arr, fromIndex, toIndex) {
   var element = arr[fromIndex];
   arr.splice(fromIndex, 1);
   arr.splice(toIndex, 0, element);
@@ -68,4 +67,10 @@ export function PinComment(arr, fromIndex, toIndex) {
   return arr;
 }
 
-
+module.exports = {
+  generateToken,
+  isAuth,
+  isAdmin,
+  upload,
+  PinComment,
+};

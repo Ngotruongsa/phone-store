@@ -1,14 +1,39 @@
-import {createStore, combineReducers, applyMiddleware, compose} from 'redux'
-import thunk from 'redux-thunk'
-import { getAllUserReducer, UserSigninReducer, UserSignupReducer} from './reducers/UserReducer'
-import {getProductByTypeReducer, getAllProductReducer, getProductByIdReducer, paginationProductReducer, ascendingProductReducer, descendingProductReducer, searchProductReducer, reviewProductReducer} from './reducers/ProductReducer'
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
+import {
+  getAllUserReducer,
+  UserSigninReducer,
+  UserSignupReducer,
+} from "./reducers/UserReducer";
+import {
+  getProductByTypeReducer,
+  getAllProductReducer,
+  getProductByIdReducer,
+  paginationProductReducer,
+  ascendingProductReducer,
+  descendingProductReducer,
+  searchProductReducer,
+  reviewProductReducer,
+} from "./reducers/ProductReducer";
 
-import { CartReducer} from './reducers/CartReducer'
-import { addressReducer, getAllOrderReducer, getOrderByUserReducer, OrderInfoReducer, orderPayReducer } from './reducers/OrderReducer'
-import { ChatReducer } from './reducers/ChatReducer'
-import { SelectListReducer, UpdateSelectListReducer } from "./reducers/SelectListReducer";
-import { ListTypeProductReducer, TypeProductReducer } from './reducers/ListTypeProductReducer'
-import { InfoGhnReducer } from './reducers/GhnReducer'
+import { CartReducer } from "./reducers/CartReducer";
+import {
+  addressReducer,
+  getAllOrderReducer,
+  getOrderByUserReducer,
+  OrderInfoReducer,
+  orderPayReducer,
+} from "./reducers/OrderReducer";
+import { ChatReducer } from "./reducers/ChatReducer";
+import {
+  SelectListReducer,
+  UpdateSelectListReducer,
+} from "./reducers/SelectListReducer";
+import {
+  ListTypeProductReducer,
+  TypeProductReducer,
+} from "./reducers/ListTypeProductReducer";
+import { InfoGhnReducer } from "./reducers/GhnReducer";
 
 const initialState = {
   userSignin: {
@@ -57,6 +82,10 @@ const reducer = combineReducers({
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(reducer,initialState, composeEnhancer(applyMiddleware(thunk)));
+const store = createStore(
+  reducer,
+  initialState,
+  composeEnhancer(applyMiddleware(thunk))
+);
 
 export default store;

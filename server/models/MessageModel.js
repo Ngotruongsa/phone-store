@@ -1,24 +1,29 @@
-import mongoose from 'mongoose'
+const mongoose = require("mongoose");
 
-const Schema = mongoose.Schema
-const MessageSchema = new Schema({
+const Schema = mongoose.Schema;
+const MessageSchema = new Schema(
+  {
     idConversation: {
-        type: Schema.Types.ObjectId,
-        ref: 'conversation',
+      type: Schema.Types.ObjectId,
+      ref: "conversation",
     },
     sender: {
-        type: String,
-        ref: 'user',
+      type: String,
+      ref: "user",
     },
     message: {
-        type: String,
+      type: String,
     },
     createAt: {
-        type: Number,
-        default: Date.now
+      type: Number,
+      default: Date.now,
     },
-}, {
-    timestamps: true
-});
+  },
+  {
+    timestamps: true,
+  }
+);
 
-export const MessageModel = mongoose.model('message', MessageSchema)
+const MessageModel = mongoose.model("message", MessageSchema);
+
+module.exports = MessageModel;

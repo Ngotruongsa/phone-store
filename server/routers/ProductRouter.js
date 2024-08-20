@@ -1,5 +1,5 @@
-import express from 'express'
-import {
+const express = require("express");
+const {
   getAllProduct,
   filterProductByType,
   findProductById,
@@ -14,9 +14,9 @@ import {
   BlogProduct,
   PinCommentProduct,
   filterProductByRandomField,
-} from "../controllers/ProductController.js";
-import { isAuth, isAdmin } from "../untils/until.js";
-import { upload } from "../untils/until.js";
+} = require("../controllers/ProductController.js");
+const { isAuth, isAdmin } = require("../untils/until.js");
+const { upload } = require("../untils/until.js");
 
 const ProductRouter = express.Router();
 
@@ -59,6 +59,6 @@ ProductRouter.delete(
   DeleteProduct
 );
 
-ProductRouter.get('/search/product', SearchProduct)
+ProductRouter.get("/search/product", SearchProduct);
 
-export default ProductRouter
+module.exports = ProductRouter;

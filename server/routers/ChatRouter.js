@@ -1,12 +1,16 @@
-import express from 'express'
-import { getAllConversation, postSaveMessage, getMessageByConversation } from '../controllers/ChatController.js'
+const express = require("express");
+const {
+  getAllConversation,
+  postSaveMessage,
+  getMessageByConversation,
+} = require("../controllers/ChatController.js");
 
-const router = express.Router()
+const router = express.Router();
 
-router.get('/', getAllConversation)
+router.get("/", getAllConversation);
 
-router.get('/message', getMessageByConversation);
+router.get("/message", getMessageByConversation);
 
-router.post('/save', postSaveMessage)
+router.post("/save", postSaveMessage);
 
-export default router
+module.exports = router;

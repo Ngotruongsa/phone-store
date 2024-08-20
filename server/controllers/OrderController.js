@@ -1,11 +1,11 @@
-import { OrderModel } from "../models/OrderModel.js";
-import expressAsyncHandler from "express-async-handler";
-import axios from "axios";
-import dotenv from "dotenv";
+const Order = require("../models/OrderModel.js");
+const expressAsyncHandler = require("express-async-handler");
+const axios = require("axios");
+const dotenv = require("dotenv");
 
 dotenv.config();
 
-export const createOrder = expressAsyncHandler(async (req, res) => {
+const createOrder = expressAsyncHandler(async (req, res) => {
   if (req.body.orderItems.length === 0) {
     res.status(400).send({ message: "cart is emty" });
   } else {
@@ -44,20 +44,20 @@ export const createOrder = expressAsyncHandler(async (req, res) => {
   }
 });
 
-export const clientCancelOrder = expressAsyncHandler(async (req, res) => {
-  const updateOrder = await OrderModel.findById({_id: req.params.id})
+const clientCancelOrder = expressAsyncHandler(async (req, res) => {
+  const updateOrder = await OrderModel.findById({ _id: req.params.id });
 
-   if(updateOrder){
-    updateOrder.cancelOrder = true
-    await updateOrder.save()
-   }
-   res.send(updateOrder)
+  if (updateOrder) {
+    updateOrder.cancelOrder = true;
+    await updateOrder.save();
+  }
+  res.send(updateOrder);
 });
 
-export const updateOrder = expressAsyncHandler(async (req, res) => {
-  console.log('updateOrder')
+const updateOrder = expressAsyncHandler(async (req, res) => {
+  console.log("updateOrder");
   let updateOrder = await OrderModel.findById({ _id: req.params.id });
-  console.log(updateOrder)
+  console.log(updateOrder);
 
   if (updateOrder) {
     let items = [];
@@ -97,63 +97,64 @@ export const updateOrder = expressAsyncHandler(async (req, res) => {
     // };
 
     const orderGhn = {
-      "payment_type_id": 2,
-      "note": "Tintest 123",
-      "from_name":"Tin",
-      "from_phone":"0909999999",
-      "from_address":"123 Đường 3/2",
-      "from_ward_name":"Phường 5",
-      "from_district_name":"Quận 11",
-      "from_province_name":"TP Hồ Chí Minh",
-      "required_note": "KHONGCHOXEMHANG",
-      "return_name": "Tin",
-      "return_phone": "0909999999",
-      "return_address": "123 Đường 3/2",
-      "return_ward_name": "Phường 5",
-      "return_district_name": "Quận 11",
-      "return_province_name":"TP Hồ Chí Minh",
-      "client_order_code": "",
-      "to_name": updateOrder.name,
-      "to_phone": updateOrder.shippingAddress.phone,
+      payment_type_id: 2,
+      note: "Tintest 123",
+      " = require(_name": "Tin",
+      " = require(_phone": "0909999999",
+      " = require(_address": "123 Đường 3/2",
+      " = require(_ward_name": "Phường 5",
+      " = require(_district_name": "Quận 11",
+      " = require(_province_name": "TP Hồ Chí Minh",
+      required_note: "KHONGCHOXEMHANG",
+      return_name: "Tin",
+      return_phone: "0909999999",
+      return_address: "123 Đường 3/2",
+      return_ward_name: "Phường 5",
+      return_district_name: "Quận 11",
+      return_province_name: "TP Hồ Chí Minh",
+      client_order_code: "",
+      to_name: updateOrder.name,
+      to_phone: updateOrder.shippingAddress.phone,
       to_address: `${updateOrder.shippingAddress.province}, ${updateOrder.shippingAddress.district}, ${updateOrder.shippingAddress.ward}, ${updateOrder.shippingAddress.detail}`,
-      "to_ward_name":updateOrder.shippingAddress.ward,
-      "to_district_name": updateOrder.shippingAddress.district,
-      "to_province_name": updateOrder.shippingAddress.province,
-      "cod_amount": updateOrder.paymentMethod === "payOnline" ? 0 : updateOrder.totalPrice,
-      "content": "Theo New York Times",
-      "weight": 200,
-      "length": 1,
-      "width": 19,
-      "height": 10,
-      "cod_failed_amount": 2000,
-      "pick_station_id": 1444,
-      "deliver_station_id": null,
-      "insurance_value": 10000000,
-      "service_id": 0,
-      "service_type_id":2,
-      "coupon":null,
-      "pick_shift":null,
-      "pickup_time": 1665272576,
-      "items": items
-    }
+      to_ward_name: updateOrder.shippingAddress.ward,
+      to_district_name: updateOrder.shippingAddress.district,
+      to_province_name: updateOrder.shippingAddress.province,
+      cod_amount:
+        updateOrder.paymentMethod === "payOnline" ? 0 : updateOrder.totalPrice,
+      content: "Theo New York Times",
+      weight: 200,
+      length: 1,
+      width: 19,
+      height: 10,
+      cod_failed_amount: 2000,
+      pick_station_id: 1444,
+      deliver_station_id: null,
+      insurance_value: 10000000,
+      service_id: 0,
+      service_type_id: 2,
+      coupon: null,
+      pick_shift: null,
+      pickup_time: 1665272576,
+      items: items,
+    };
     updateOrder.order_code = req.params.id;
     await updateOrder.save();
     res.send(updateOrder);
 
     try {
-      console.log('-----', orderGhn)
+      console.log("-----", orderGhn);
       const { data } = await axios.post(
         "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create",
         orderGhn,
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             shop_id: process.env.SHOP_ID,
             token: process.env.TOKEN_GHN,
           },
         }
       );
-      console.log({data})
+      console.log({ data });
 
       const order_code = data.data.order_code;
 
@@ -161,14 +162,14 @@ export const updateOrder = expressAsyncHandler(async (req, res) => {
       await updateOrder.save();
       res.send(updateOrder);
     } catch (error) {
-      console.log({error: error.message})
+      console.log({ error: error.message });
     }
   } else {
     res.send({ msg: "product not found" });
   }
 });
 
-export const PrintOrderGhn = expressAsyncHandler(async (req, res) => {
+const PrintOrderGhn = expressAsyncHandler(async (req, res) => {
   const Order = await OrderModel.findById({ _id: req.params.id });
   if (Order) {
     let token;
@@ -198,16 +199,13 @@ export const PrintOrderGhn = expressAsyncHandler(async (req, res) => {
         }
       );
       res.send(result.config.url);
-    } catch (error) {
-    }
-    
+    } catch (error) {}
   } else {
-    res.send({message: 'order not found'})
+    res.send({ message: "order not found" });
   }
 });
 
-
-export const GetAllOrder = expressAsyncHandler(async (req, res) => {
+const GetAllOrder = expressAsyncHandler(async (req, res) => {
   //await OrderModel.remove()
   const Order = await OrderModel.find({}).sort({ createdAt: -1 });
   if (Order) {
@@ -217,7 +215,7 @@ export const GetAllOrder = expressAsyncHandler(async (req, res) => {
   }
 });
 
-export const GetAllOrderPaypal = expressAsyncHandler(async (req, res) => {
+const GetAllOrderPaypal = expressAsyncHandler(async (req, res) => {
   const Order = await OrderModel.find({ paymentMethod: "payOnline" }).sort({
     createdAt: -1,
   });
@@ -228,7 +226,7 @@ export const GetAllOrderPaypal = expressAsyncHandler(async (req, res) => {
   }
 });
 
-export const GetAllOrderPendding = expressAsyncHandler(async (req, res) => {
+const GetAllOrderPendding = expressAsyncHandler(async (req, res) => {
   const Order = await OrderModel.find({
     $or: [{ status: "pendding" }, { paymentMethod: "payOnline" }],
   }).sort({
@@ -241,7 +239,7 @@ export const GetAllOrderPendding = expressAsyncHandler(async (req, res) => {
   }
 });
 
-export const GetAllOrderShipping = expressAsyncHandler(async (req, res) => {
+const GetAllOrderShipping = expressAsyncHandler(async (req, res) => {
   const Order = await OrderModel.find({ status: "shipping" }).sort({
     createdAt: -1,
   });
@@ -252,7 +250,7 @@ export const GetAllOrderShipping = expressAsyncHandler(async (req, res) => {
   }
 });
 
-export const GetAllOrderPaid = expressAsyncHandler(async (req, res) => {
+const GetAllOrderPaid = expressAsyncHandler(async (req, res) => {
   const Order = await OrderModel.find({ status: "paid" }).sort({
     createdAt: -1,
   });
@@ -263,8 +261,8 @@ export const GetAllOrderPaid = expressAsyncHandler(async (req, res) => {
   }
 });
 
-export const DeleteOrder = expressAsyncHandler(async (req, res) => {
-  const deleteOrder = await OrderModel.findById({_id: req.params.id});
+const DeleteOrder = expressAsyncHandler(async (req, res) => {
+  const deleteOrder = await OrderModel.findById({ _id: req.params.id });
 
   if (deleteOrder) {
     await deleteOrder.remove();
@@ -274,7 +272,7 @@ export const DeleteOrder = expressAsyncHandler(async (req, res) => {
   }
 });
 
-export const ShippingProduct = expressAsyncHandler(async (req, res) => {
+const ShippingProduct = expressAsyncHandler(async (req, res) => {
   const status = "shipping";
   const Order = await OrderModel.findById({ _id: req.params.id });
   if (Order) {
@@ -286,7 +284,7 @@ export const ShippingProduct = expressAsyncHandler(async (req, res) => {
   }
 });
 
-export const PaidProduct = expressAsyncHandler(async (req, res) => {
+const PaidProduct = expressAsyncHandler(async (req, res) => {
   const status = "paid";
   const Order = await OrderModel.findByIdAndUpdate(
     { _id: req.params.id },
@@ -301,7 +299,7 @@ export const PaidProduct = expressAsyncHandler(async (req, res) => {
 
 // --------------------    user
 
-export const GetOrderByUser = expressAsyncHandler(async (req, res) => {
+const GetOrderByUser = expressAsyncHandler(async (req, res) => {
   const Order = await OrderModel.find({ user: req.params.id }).sort({
     createdAt: -1,
   });
@@ -312,7 +310,7 @@ export const GetOrderByUser = expressAsyncHandler(async (req, res) => {
   }
 });
 
-export const GetOrderPaypalByUser = expressAsyncHandler(async (req, res) => {
+const GetOrderPaypalByUser = expressAsyncHandler(async (req, res) => {
   const Order = await OrderModel.find({
     user: req.params.id,
     paymentMethod: "payOnline",
@@ -324,7 +322,7 @@ export const GetOrderPaypalByUser = expressAsyncHandler(async (req, res) => {
   }
 });
 
-export const GetOrderPenddingByUser = expressAsyncHandler(async (req, res) => {
+const GetOrderPenddingByUser = expressAsyncHandler(async (req, res) => {
   const Order = await OrderModel.find({
     user: req.params.id,
     status: "pendding",
@@ -336,7 +334,7 @@ export const GetOrderPenddingByUser = expressAsyncHandler(async (req, res) => {
   }
 });
 
-export const GetOrderShippingByUser = expressAsyncHandler(async (req, res) => {
+const GetOrderShippingByUser = expressAsyncHandler(async (req, res) => {
   const Order = await OrderModel.find({
     user: req.params.id,
     status: "shipping",
@@ -348,7 +346,7 @@ export const GetOrderShippingByUser = expressAsyncHandler(async (req, res) => {
   }
 });
 
-export const GetOrderPaidByUser = expressAsyncHandler(async (req, res) => {
+const GetOrderPaidByUser = expressAsyncHandler(async (req, res) => {
   const Order = await OrderModel.find({
     user: req.params.id,
     status: "paid",
@@ -360,7 +358,7 @@ export const GetOrderPaidByUser = expressAsyncHandler(async (req, res) => {
   }
 });
 
-export const GetAllOrderInAMonth = expressAsyncHandler(async (req, res) => {
+const GetAllOrderInAMonth = expressAsyncHandler(async (req, res) => {
   const Order = await OrderModel.find({
     createdAt: {
       $gte: new Date(2021, 7, 11),
@@ -375,3 +373,23 @@ export const GetAllOrderInAMonth = expressAsyncHandler(async (req, res) => {
   }
 });
 
+module.exports = {
+  createOrder,
+  clientCancelOrder,
+  updateOrder,
+  PrintOrderGhn,
+  GetAllOrder,
+  GetAllOrderPaypal,
+  GetAllOrderPendding,
+  GetAllOrderShipping,
+  GetAllOrderPaid,
+  DeleteOrder,
+  ShippingProduct,
+  PaidProduct,
+  GetOrderByUser,
+  GetOrderPaypalByUser,
+  GetOrderPenddingByUser,
+  GetOrderShippingByUser,
+  GetOrderPaidByUser,
+  GetAllOrderInAMonth,
+};
